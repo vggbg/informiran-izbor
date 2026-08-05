@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="bg">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://fonts.googleapis.com/css?family=Arsenal&amp;subset=latin,cyrillic-ext" rel="stylesheet" type="text/css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <title>Хранителни добавки (E-номера)</title>
+      <style>
+         body {
+            font-family: Arsenal, sans-serif;
+            line-height: 1.6;
+            margin: 20px auto;
+            max-width: 1200px;
+            padding: 0 20px;
+            background-color: #fcf9f5;
+            color: #2c3e50;
+         }
+         h1 {
+            color: #d35400;
+            text-align: center;
+            border-bottom: 3px solid #e67e22;
+            padding-bottom: 12px;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+         }
+         h1 i {
+            color: #e67e22;
+            margin-right: 10px;
+         }
+         h2 {
+            color: #d35400;
+            margin-top: 40px;
+            border-left: 6px solid #e67e22;
+            padding: 10px 18px;
+            background-color: #fef5e7;
+            line-height: 1.5;
+            border-radius: 0 8px 8px 0;
+            font-weight: 600;
+         }
+         h2 i {
+            margin-right: 10px;
+            color: #e67e22;
+         }
+         .search-container {
+            text-align: center;
+            margin: 25px auto 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(211, 84, 0, 0.08);
+            max-width: 700px;
+            border: 1px solid #f0e6d8;
+         }
+         #searchInput {
+            width: 85%;
+            padding: 12px 24px;
+            font-size: 16px;
+            border: 2px solid #e67e22;
+            border-radius: 30px;
+            outline: none;
+            transition: 0.3s;
+            background-color: #fffdfa;
+         }
+         #searchInput:focus {
+            border-color: #d35400;
+            box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.15);
+         }
+         .search-info {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 10px;
+         }
+         .search-info i {
+            margin-right: 6px;
+            color: #e67e22;
+         }
+         table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 35px;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            table-layout: fixed;
+         }
+         th {
+            background-color: #e67e22;
+            color: white;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px 10px;
+            border: none;
+            width: 12%;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+         }
+         th i {
+            margin-right: 6px;
+         }
+         th:nth-child(2) {
+            width: 18%;
+         }
+         th:nth-child(3) {
+            width: 70%;
+         }
+         td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #f0e6d8;
+            vertical-align: top;
+            background-color: #fff;
+         }
+         td:first-child {
+            font-weight: 700;
+            background-color: #fef9f0;
+            text-align: center;
+            color: #d35400;
+         }
+         tr:nth-child(even) td {
+            background-color: #fcf9f5;
+         }
+         tr:nth-child(even) td:first-child {
+            background-color: #fdf6ed;
+         }
+         tr:hover td {
+            background-color: #fef5e7;
+         }
+         tr:hover td:first-child {
+            background-color: #fdebd0;
+         }
+         .note {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-top: 30px;
+            text-align: center;
+            padding: 15px;
+            background: #fef9f0;
+            border-radius: 10px;
+            border: 1px solid #f0e6d8;
+         }
+         .note i {
+            margin-right: 6px;
+            color: #e67e22;
+         }
+         td:first-child a {
+            text-decoration: none;
+            color: #d35400;
+            font-weight: 700;
+            display: block;
+         }
+         td:first-child a:hover {
+            text-decoration: underline;
+            color: #e67e22;
+            cursor: pointer;
+         }
+         .scroll-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 54px;
+            height: 54px;
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(211, 84, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            outline: none;
+         }
+         .scroll-top-btn.show {
+            opacity: 1;
+            visibility: visible;
+         }
+         .scroll-top-btn:hover {
+            background-color: #d35400;
+            transform: scale(1.08);
+            box-shadow: 0 6px 20px rgba(211, 84, 0, 0.4);
+         }
+         .scroll-top-btn:active {
+            transform: scale(0.95);
+         }
+         @media (max-width: 768px) {
+            body {
+               padding: 0 12px;
+               margin: 15px auto;
+            }
+            h1 {
+               font-size: 1.8rem;
+            }
+            h2 {
+               font-size: 1.3rem;
+               padding: 8px 14px;
+            }
+            #searchInput {
+               width: 100%;
+               padding: 10px 18px;
+               font-size: 15px;
+            }
+            .scroll-top-btn {
+               width: 48px;
+               height: 48px;
+               font-size: 20px;
+               bottom: 20px;
+               right: 20px;
+            }
+            table {
+               font-size: 0.9rem;
+            }
+            th, td {
+               padding: 8px 6px;
+            }
+         }
+         @media (max-width: 480px) {
+            table {
+               font-size: 0.8rem;
+            }
+            th, td {
+               padding: 6px 4px;
+               word-break: break-word;
+            }
+            h1 {
+               font-size: 1.5rem;
+            }
+            h2 {
+               font-size: 1.1rem;
+               padding: 6px 12px;
+            }
+            .scroll-top-btn {
+               width: 42px;
+               height: 42px;
+               font-size: 18px;
+               bottom: 16px;
+               right: 16px;
+            }
+         }
+      </style>
+   </head>
+   <body>
+      <h1><i class="fas fa-flask"></i> Списък на хранителните добавки (E-номера)</h1>
+      <div class="search-container">
+         <input type="text" id="searchInput" placeholder="🔍 Търсене по номер, наименование или коментар... " autocomplete="off">
+         <div class="search-info"><i class="fas fa-info-circle"></i> Търсенето работи във всички колони. За няколко Е-номера ";" или "," (пример: E151; E300; E501)</div>
+      </div>
+      <!-- ===================== ОЦВЕТИТЕЛИ (E100-E181) ===================== -->
+      <h2><i class="fas fa-palette"></i> Оцветители (E100-E181)</h2>
+      <table class="searchable-table">
+         <thead>
+            <tr>
+               <th><i class="fas fa-hashtag"></i> Номер</th>
+               <th><i class="fas fa-font"></i> Наименование</th>
+               <th><i class="fas fa-comment"></i> Коментар</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>E100</td>
+               <td>Curcumin</td>
+               <td>жълто-оранжев; извлича се от корена на растението куркума – curcuma (turmeric), но може и да бъде синтезирано; използва се в сирената, маргарина, печени сладкиши и подправки</td>
+            </tr>
+            <tr>
+               <td>E101</td>
+               <td>Riboflavin, Riboflavin-5′-phosphate</td>
+               <td>‘Витамин B2’ и оцветител, естествено го има в зелените зеленчуци, яйцата, млякото, черния дроб и бъбрека; употребява се в маргарина и сирената</td>
+            </tr>
+            <tr>
+               <td>E102</td>
+               <td>Tartrazine</td>
+               <td>FD&C Yellow No.5; предполага се че предизвиква асматични атаки (по US FDA** – не), ортикария при деца (по US FDA** изчисления 1:10 000); tartrazine чувствителност е свързана са чувствителността спрямо аспирина; използва се за оцветяване на безалкохолни напитки, сладкиши, конфитюри, тестени храни, snack foods, консервирана риба, готови супи; забранен в Норвегия и Австрия</td>
+            </tr>
+            <tr>
+               <td>E104</td>
+               <td>Quinoline Yellow</td>
+               <td>FD&C Жълто No.10; използва се в червилата и продукти за коса, одеколони; може да причини дерматит; забранен в Австралия, САЩ и Норвегия</td>
+            </tr>
+            <tr>
+               <td>E107</td>
+               <td>Yellow 7G</td>
+               <td>жълт оцветител; HACSG* препоръчва се да се избягва; страдащи от астма могат да проявят алергична реакция към него; типична употреба – безалкохолни напитки; забранен в Австралия, САЩ</td>
+            </tr>
+            <tr>
+               <td>E110</td>
+               <td>Sunset Yellow FCF, Orange Yellow S</td>
+               <td>FD&C Жълто No.6; използван в тестените изделия, пекарството, сладкишите, сладоледа, напитки и консервирана риба; синтетичен; също в много лекарства – Berocca, Polaramine, Ventolin syrup; странични ефекти – ортикария, ринити, коремни болки, гадене и повръщане, непоносимост към храна; забранен в Норвегия</td>
+            </tr>
+            <tr>
+               <td>E120</td>
+               <td>Cochineal, Carminic acid, Carmines</td>
+               <td>червен цвят; произвежда се от насекоми; рядко използван; HASCG* препоръчва да се избягва</td>
+            </tr>
+            <tr>
+               <td>E122</td>
+               <td>Azorubine, Carmoisine</td>
+               <td>червен цвят; дериват от въглищния катран; може да се получи реакция при астматици и хора, алергични към аспирин; използва се в сладкарството, марципан, желета; забранен в Австрия, САЩ, Норвегия и Швеция</td>
+            </tr>
+            <tr>
+               <td>E123</td>
+               <td>Amaranth</td>
+               <td>FD&C Червено No.2; извлича се от растението herbaceous; използва се при миксове за кейк, плодови пълнежи, желета; може да провокира астма, екзема и хиперактивност; вреден при бременност; забранен в Австрия, САЩ, Русия, Норвегия и др.</td>
+            </tr>
+            <tr>
+               <td>E124</td>
+               <td>Ponceau 4R, Cochineal Red A</td>
+               <td>FD&C Червено No.4; канцероген при животни, реакции при астматици и алергични към аспирин; забранен в САЩ и Норвегия</td>
+            </tr>
+            <tr>
+               <td>E127</td>
+               <td>Erythrosine</td>
+               <td>FD&C Червено No.3; червен оцветител, използуван при консервиране на зеленчуци и плодове, микс за крем карамел, сладкиши; може да причини чувствителност към светлина, да увеличи нивата на хормоните на щитовидната жлеза; забранен в Норвегия</td>
+            </tr>
+            <tr>
+               <td>E128</td>
+               <td>Red 2G</td>
+               <td>Забранен в Австралия и много други страни, освен Великобритания</td>
+            </tr>
+            <tr>
+               <td>E129</td>
+               <td>Allura red AC</td>
+               <td>FD&C Червено No.40; оранжево-червен, използван в сладки, напитки и подправки, лекарства и козметика; синтетичен, въведен в началото на 80-те за да замени amaranth; забранен в Дания, Белгия, Франция, Германия, Швейцария, Швеция, Австрия и Норвегия</td>
+            </tr>
+            <tr>
+               <td>E131</td>
+               <td>Patent blue V</td>
+               <td>Син. Забранен в Австралия, САЩ и Норвегия</td>
+            </tr>
+            <tr>
+               <td>E132</td>
+               <td>Indigotine, Indigo carmine</td>
+               <td>FD&C Син No.2, основно се прибавя към таблетки и капсули; също в производството на сладолед, сладкарството; синтетичен- извлечен от въглищния катран; може да причини гадене, повръщане, високо кръвно налягане, проблеми с дишането или други алергични реакции. Забранен в Норвегия</td>
+            </tr>
+            <tr>
+               <td>E133</td>
+               <td>Brilliant blue FCF</td>
+               <td>FD&C Blue Dye No.1; използва се в млечни продукти, сладки и напитки; синтетичен – течен или амониева сол; забранен в Белгия, Франция, Германия, Швейцария, Швеция, Австрия и Норвегия</td>
+            </tr>
+            <tr>
+               <td>E140</td>
+               <td>Chlorophylis, Chlorophyllins</td>
+               <td>зелен оцветител, намиращ се естествено в растенията, използва се за оцветяване на восъци и масла, използва се в медицината и козметиката</td>
+            </tr>
+            <tr>
+               <td>E141</td>
+               <td>Copper complexes of chloropyll and chlorophyllins</td>
+               <td>маслинено зелен, без неблагоприятни ефекти</td>
+            </tr>
+            <tr>
+               <td>E142</td>
+               <td>Green S</td>
+               <td>зелен; синтетичен дериват от въглищния катран; използва се при консервирания грах; забранен в Швеция, САЩ и Норвегия</td>
+            </tr>
+            <tr>
+               <td>E150(a)</td>
+               <td>Plain caramel</td>
+               <td>тъмно кафяв; HACSG* препоръчва да се избягва. използва се в сосове, бира, уиски, бисквити, маринати</td>
+            </tr>
+            <tr>
+               <td>E150(b)</td>
+               <td>Caustic sulphite caramel</td>
+               <td>виж E150(a)</td>
+            </tr>
+            <tr>
+               <td>E150(c)</td>
+               <td>Ammonia caramel</td>
+               <td>виж E150(a)</td>
+            </tr>
+            <tr>
+               <td>E150(d)</td>
+               <td>Sulphite ammonia caramel</td>
+               <td>виж E150(a)</td>
+            </tr>
+            <tr>
+               <td>E151</td>
+               <td>Brilliant Black BN, Black PN</td>
+               <td>черно; дериват от въгления катран, използва се при сосове, сладкарски миксове; забранен в Дания, Австралия, Белгия, Франция, Германия, Швейцария, Швеция, Австрия, САЩ, Норвегия</td>
+            </tr>
+            <tr>
+               <td>E153</td>
+               <td>Vegetable carbon</td>
+               <td>черен цвят, въглищен пигмент; използва се конфитюри, желета, ликьори, само зеленчуков дериват е разрешен в Австралия, забранен в САЩ</td>
+            </tr>
+            <tr>
+               <td>E154</td>
+               <td>Brown FK</td>
+               <td>кафяв, забранен в САЩ</td>
+            </tr>
+            <tr>
+               <td>E155</td>
+               <td>Brown HT (Chocolate)</td>
+               <td>кафяв, използва се в шоколадови миксове, може да предизвика астматични реакции и при хора, алергични към аспирин, както и кожна чувствителност; забранен в Дания, Белгия, Франция, Германия, Швейцария, Швеция, Австрия, САЩ и Норвегия</td>
+            </tr>
+            <tr>
+               <td>E160(a)</td>
+               <td>Carotene, alpha-, beta-, gamma-</td>
+               <td>жълто-оранжев, човешкото тяло го превръща във ‘Vitamin A’ в черния дроб, има го в морковите и други жълти или оранжеви плодове и зеленчуци</td>
+            </tr>
+            <tr>
+               <td>E160(b)</td>
+               <td>Annatto (Arnatto, Annato), bixin, norbixin</td>
+               <td>червен; извлича се от дървото Bixa orellana; използва за оцветяване на сирена, масло, маргарин, супи, тестени изделия; лак за нокти; може да причини ортикария (nettle rash)</td>
+            </tr>
+            <tr>
+               <td>E160(c)</td>
+               <td>Paprika extract, capsanthin, capsorubin</td>
+               <td>червен, не се знаят странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E160(d)</td>
+               <td>Lycopene</td>
+               <td>червен, не се знаят странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E160(e)</td>
+               <td>Beta-apo-8′-carotenal (C 30)</td>
+               <td>оранжев, не се знаят странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E160(f)</td>
+               <td>Ethyl ester of beta-apo-8′-carotenic acid (C 30)</td>
+               <td>оранжев, не се знаят странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E161(b)</td>
+               <td>Xanthophylls – Lutein</td>
+               <td>жълт, извлича се от растения, невен и яйчен жълтък</td>
+            </tr>
+            <tr>
+               <td>E161(g)</td>
+               <td>Xanthophylls – Canthaxanthin</td>
+               <td>жълт цвят, вероятно се извлича от животинска суровина (ретинол); има го в някои гъби, ракообразни, риби, пера на фламинго</td>
+            </tr>
+            <tr>
+               <td>E162</td>
+               <td>Beetroot Red, Betanin</td>
+               <td>пурпурен, не се знаят странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E163</td>
+               <td>Anthocyanins</td>
+               <td>виолетов, не се знаят странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E170</td>
+               <td>Calcium carbonate</td>
+               <td>минерална сол, бяла; използува се като пълнители абразив в много продукти, както и в бели бои</td>
+            </tr>
+            <tr>
+               <td>E171</td>
+               <td>Titanium dioxide</td>
+               <td>бяла минерална сол</td>
+            </tr>
+            <tr>
+               <td>E172</td>
+               <td>Iron oxides and hydroxides</td>
+               <td>черен, червен и жълт цвят, използва се в някои рибни пастети; токсичен в големи дози</td>
+            </tr>
+            <tr>
+               <td>E173</td>
+               <td>Aluminium</td>
+               <td></td>
+            </tr>
+            <tr>
+               <td>E174</td>
+               <td>Silver</td>
+               <td></td>
+            </tr>
+            <tr>
+               <td>E175</td>
+               <td>Gold</td>
+               <td></td>
+            </tr>
+            <tr>
+               <td>E180</td>
+               <td>Latolrubine BK</td>
+               <td>да се избягва</td>
+            </tr>
+            <tr>
+               <td>E181</td>
+               <td>Tannic acid, tannins</td>
+               <td>пречистващ агент в алкохола, извлича се от шишарки и листа от дъб</td>
+            </tr>
+         </tbody>
+      </table>
+      <!-- ===================== КОНСЕРВАНТИ (E200-E290) ===================== -->
+      <h2><i class="fas fa-shield-alt"></i> Консерванти (E200-E290)</h2>
+      <table class="searchable-table">
+         <thead>
+            <tr>
+               <th><i class="fas fa-hashtag"></i> Номер</th>
+               <th><i class="fas fa-font"></i> Наименование</th>
+               <th><i class="fas fa-comment"></i> Коментар</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>E200</td>
+               <td>Sorbic acid</td>
+               <td>получена от безкостилкови или синтезирана от кетен, възможно е дразнене на кожата</td>
+            </tr>
+            <tr>
+               <td>E201</td>
+               <td>Sodium sorbate</td>
+               <td>не са известни вредни ефекти</td>
+            </tr>
+            <tr>
+               <td>E202</td>
+               <td>Potassium sorbate</td>
+               <td>не са известни вредни ефекти</td>
+            </tr>
+            <tr>
+               <td>E203</td>
+               <td>Calcium sorbate</td>
+               <td>не са известни вредни ефекти</td>
+            </tr>
+            <tr>
+               <td>E210</td>
+               <td>Benzoic acid</td>
+               <td>фенилкарбоксилова киселина; прибавя се към алкохолните продукти, сирена, подправки, замразени храни, в козметиката и фармацията, и много други; може да причини астма, особено при зависими от стероидни лекарства, може да взаимодейства със серен бисулфит(222), което може да доведе до хиперактивност при децата</td>
+            </tr>
+            <tr>
+               <td>E211</td>
+               <td>Sodium benzoate</td>
+               <td>използва се като антисептик, за хранителен консервант и маскиращ вкуса; портокаловите сокове съдържат високо количество, до 25mg на 250ml; също в млечните и месни продукти, подправките, както и в някои лекарства; може да предизвика обриви и да усили астма</td>
+            </tr>
+            <tr>
+               <td>E212</td>
+               <td>Potassium benzoate</td>
+               <td>при хора с алергични реакции. в.ж 210</td>
+            </tr>
+            <tr>
+               <td>E213</td>
+               <td>Calcium benzoate</td>
+               <td>виж 212</td>
+            </tr>
+            <tr>
+               <td>E214</td>
+               <td>Ethyl p-hydroxybenzoate</td>
+               <td>да се избягва, забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E215</td>
+               <td>Sodium ethyl p-hydroxybenzoate</td>
+               <td>да се избягва, забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E216</td>
+               <td>Propyl p-hydroxybenzoate</td>
+               <td>възможен алерген</td>
+            </tr>
+            <tr>
+               <td>E217</td>
+               <td>Sodium propyl p-hydroxybenzoate</td>
+               <td>да се избягва, забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E218</td>
+               <td>Methyl p-hydroxybenzoate</td>
+               <td>възможни алергични реакции, главно върху кожата</td>
+            </tr>
+            <tr>
+               <td>E219</td>
+               <td>Sodium methyl p-hydroxybenzoate</td>
+               <td>да се избягва, забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E220</td>
+               <td>Sulphur dioxide</td>
+               <td>серен двуокис; може да предизвика астматични пристъпи и метаболитни промени при хора с понижени бъбречни функции, също разрушава vitamin B1; типични приложение при производството на бира, безалкохолни, сушени плодове, вино, оцет, картофени продукти</td>
+            </tr>
+            <tr>
+               <td>E221</td>
+               <td>Sodium sulphite</td>
+               <td>почистващ агент при производството на сокове, възможни чревни разстройства; виж 220</td>
+            </tr>
+            <tr>
+               <td>E222</td>
+               <td>Sodium hydrogen sulphite</td>
+               <td>виж 220</td>
+            </tr>
+            <tr>
+               <td>E223</td>
+               <td>Sodium metabisulphite</td>
+               <td>третиращ агент, виж 220</td>
+            </tr>
+            <tr>
+               <td>E224</td>
+               <td>Potassium metabisulphite</td>
+               <td>виж 220</td>
+            </tr>
+            <tr>
+               <td>E225</td>
+               <td>Potassium sulphite</td>
+               <td>виж 220</td>
+            </tr>
+            <tr>
+               <td>E226</td>
+               <td>Calcium sulphite</td>
+               <td>да се избягва, забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E227</td>
+               <td>Calcium hydrogen sulphite</td>
+               <td>да се избягва, забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E228</td>
+               <td>Potassium hydrogen sulphite</td>
+               <td>виж 220</td>
+            </tr>
+            <tr>
+               <td>E230</td>
+               <td>Biphenyl, Diphenyl</td>
+               <td>може да предизвика кожни проблеми; може да се използва за земеделски цели – цитрусови плодове</td>
+            </tr>
+            <tr>
+               <td>E231</td>
+               <td>Orthophenyl phenol</td>
+               <td>може да предизвика кожни проблеми; може да се използва за земеделски цели – pears, carrots, peaches, plums, prunes, sweet potatoe, citrus fruit, pineapples, tomatoes, peppers, cherries, nectarines</td>
+            </tr>
+            <tr>
+               <td>E232</td>
+               <td>Sodium orthophenyl phenol</td>
+               <td>виж 231</td>
+            </tr>
+            <tr>
+               <td>E233</td>
+               <td>Thiabendazole</td>
+               <td>виж 231</td>
+            </tr>
+            <tr>
+               <td>E234</td>
+               <td>Nisin</td>
+               <td>антибиотик, добит от бактерия; прилага се при производството на бира, продукти на сиренето, доматени пюрета</td>
+            </tr>
+            <tr>
+               <td>E235</td>
+               <td>Natamycin</td>
+               <td>плесенен инхибитор, произведен чрез бактерии; може да причини гадене, повръщане, диария и кожно дразнене; типично приложение – месо, сирене</td>
+            </tr>
+            <tr>
+               <td>E236</td>
+               <td>Formic acid</td>
+               <td>да се избягва, забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E237</td>
+               <td>Sodium formate</td>
+               <td>да се избягва, забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E238</td>
+               <td>Calcium formate</td>
+               <td>да се избягва, забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E239</td>
+               <td>Hexamethylene tetramine</td>
+               <td>да се избягва, забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E249</td>
+               <td>Potassium nitrite</td>
+               <td>фиксира цвета и консервант при месото; може да окаже ефект върху пренасянето на кислород в тялото, резултиращо в учестено дишане, замайване и главоболие, потенциален канцероген, не е разрешен при храни за бебета и деца</td>
+            </tr>
+            <tr>
+               <td>E250</td>
+               <td>Sodium nitrite</td>
+               <td>може да предизвика хиперстезия, потенциално канцерогенен, забранен в много страни, може да взаимодейства в стомаха до образуване на нитрозамин. Препоръчва се избягването му</td>
+            </tr>
+            <tr>
+               <td>E251</td>
+               <td>Sodium nitrate</td>
+               <td>виж 250</td>
+            </tr>
+            <tr>
+               <td>E252</td>
+               <td>Potassium nitrate</td>
+               <td>виж see 249 и 250</td>
+            </tr>
+            <tr>
+               <td>E260</td>
+               <td>Acetic acid</td>
+               <td>основен компонент на оцета</td>
+            </tr>
+            <tr>
+               <td>E261</td>
+               <td>Potassium acetate</td>
+               <td>в сосове и маринати – да се избягва от хора с увредени бъбречни функции</td>
+            </tr>
+            <tr>
+               <td>E262</td>
+               <td>Sodium acetate, Sodium diacetate</td>
+               <td>виж 260</td>
+            </tr>
+            <tr>
+               <td>E263</td>
+               <td>Calcium acetate</td>
+               <td>виж 260</td>
+            </tr>
+            <tr>
+               <td>E264</td>
+               <td>Ammonium acetate</td>
+               <td>като 263, но може да предизвика гадене и повръщане</td>
+            </tr>
+            <tr>
+               <td>E270</td>
+               <td>Lactic acid</td>
+               <td>млечна киселина, киселинен регулатор</td>
+            </tr>
+            <tr>
+               <td>E280</td>
+               <td>Propionic acid</td>
+               <td>използва се в хлебопроизводството и колбасарството</td>
+            </tr>
+            <tr>
+               <td>E281</td>
+               <td>Sodium propionate</td>
+               <td>виж 281</td>
+            </tr>
+            <tr>
+               <td>E282</td>
+               <td>Calcium propionate</td>
+               <td>виж 281</td>
+            </tr>
+            <tr>
+               <td>E283</td>
+               <td>Potassium propionate</td>
+               <td>виж 281</td>
+            </tr>
+            <tr>
+               <td>E290</td>
+               <td>Carbon dioxide</td>
+               <td>въглероден двуокис</td>
+            </tr>
+            <tr>
+               <td>E296</td>
+               <td>Malic acid</td>
+               <td>ябълчна киселина</td>
+            </tr>
+            <tr>
+               <td>E297</td>
+               <td>Fumaric acid</td>
+               <td>фумарова киселина, получава се от растението Fumaria esp. F.officianalis или при ферментацията на глюкозата с плесени, може да служи като овкусител, за подкиселяване, антиоксидант при безалкохолни</td>
+            </tr>
+         </tbody>
+      </table>
+      <!-- ===================== КИСЕЛИНИ, АНТИОКСИДАНТИ, МИНЕРАЛНИ СОЛИ (Е296-Е385) ===================== -->
+      <h2><i class="fas fa-vial"></i> Киселини, антиоксиданти, минерални соли (Е296-Е385)</h2>
+      <table class="searchable-table">
+         <thead>
+            <tr>
+               <th><i class="fas fa-hashtag"></i> Номер</th>
+               <th><i class="fas fa-font"></i> Наименование</th>
+               <th><i class="fas fa-comment"></i> Коментар</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>E300</td>
+               <td>Ascorbic acid</td>
+               <td>аскорбинова к-на, ‘vitamin C’; прилага се в хлебопроизводството, при обработка на брашното и много други</td>
+            </tr>
+            <tr>
+               <td>E301</td>
+               <td>Sodium ascorbate</td>
+               <td>натриева сол на Е300</td>
+            </tr>
+            <tr>
+               <td>E302</td>
+               <td>Calcium ascorbate</td>
+               <td>калциева сол на Е300</td>
+            </tr>
+            <tr>
+               <td>E303</td>
+               <td>Potassium ascorbate</td>
+               <td>калиева сол на vitamin C</td>
+            </tr>
+            <tr>
+               <td>E304</td>
+               <td>Ascorbyl palmitate, Ascorbyl stearate</td>
+               <td>естери на аскорбиновата киселина с мастни киселини</td>
+            </tr>
+            <tr>
+               <td>E306,E307,E308,E309</td>
+               <td>Tocopherols, alpha-,gamma-,delta-</td>
+               <td>‘vitamin E’; намира се в много масла, включително в соя, житни зародиши, оризови зародиши, памучно семе, царевица, работи като антиоксидант на мастните киселини, предотвратяващ окислението на вит. А, използва се в маргарина и салатни дресинги</td>
+            </tr>
+            <tr>
+               <td>E310</td>
+               <td>Propyl gallate</td>
+               <td>използва се за предотвратяване на гранясването на мастни субстанции; извлича се от шикалки; може да причини кожни или коремни раздразнения, галатите не се допускат за бебешки и детски храни; използват се при масла, маргарин, салатни дресинги</td>
+            </tr>
+            <tr>
+               <td>E311</td>
+               <td>Octyl gallate</td>
+               <td>виж 310</td>
+            </tr>
+            <tr>
+               <td>E312</td>
+               <td>Dodecyl gallate</td>
+               <td>виж 310</td>
+            </tr>
+            <tr>
+               <td>E315</td>
+               <td>Erythorbic acid</td>
+               <td>получава се от sucrose</td>
+            </tr>
+            <tr>
+               <td>E316</td>
+               <td>Sodium erythorbate</td>
+               <td>получава се от E317</td>
+            </tr>
+            <tr>
+               <td>E319</td>
+               <td>Tert-ButylHydroQuinone (TBHQ)</td>
+               <td>HACSG* препоръчва да се избягва. Може да причини гадене, повръщане. Доза от 5g се разглежда като фатална. Прилага се при мазнините, масла, маргарин</td>
+            </tr>
+            <tr>
+               <td>E320</td>
+               <td>Butylated hydroxy-anisole (BHA)</td>
+               <td>забавя повреждането от окисление; използва се в ядивните мазнини, дъвки, маргарин, инстантните картофени продукти, не разрешен за бебешки храни</td>
+            </tr>
+            <tr>
+               <td>E321</td>
+               <td>Butylated hydroxy-toluene (BHT)</td>
+               <td>виж E320</td>
+            </tr>
+            <tr>
+               <td>E322</td>
+               <td>Lecithins</td>
+               <td>емулгатор, извлечен от соеви зърна, яйчени жълтъци, фъстъци; не е токсичен, но превишаването на дозата води до стомашни разстройства, липса на апетит; използва се за в маслата, шоколада, майонезата</td>
+            </tr>
+            <tr>
+               <td>E325</td>
+               <td>Sodium lactate</td>
+               <td>получава се от мляко; при хора с лактозна непоносимост може да предизвика нежелана реакция</td>
+            </tr>
+            <tr>
+               <td>E326</td>
+               <td>Potassium lactate</td>
+               <td>виж 325</td>
+            </tr>
+            <tr>
+               <td>E327</td>
+               <td>Calcium lactate</td>
+               <td>виж 325</td>
+            </tr>
+            <tr>
+               <td>E328</td>
+               <td>Ammonium lactate</td>
+               <td>виж 325</td>
+            </tr>
+            <tr>
+               <td>E329</td>
+               <td>Magnesium lactate</td>
+               <td>виж 325</td>
+            </tr>
+            <tr>
+               <td>E330</td>
+               <td>Citric acid</td>
+               <td>лимонена киселина; използва се в бисквити, консервирана риба, безалкохолни, продукти от сирене, супни миксове, ръжен хляб</td>
+            </tr>
+            <tr>
+               <td>E331</td>
+               <td>Sodium citrates</td>
+               <td>Натриева сол на Е300</td>
+            </tr>
+            <tr>
+               <td>E332</td>
+               <td>Potassium citrates</td>
+               <td>Калиева сол на Е300</td>
+            </tr>
+            <tr>
+               <td>E333</td>
+               <td>Calcium citrates</td>
+               <td>Калциева сол на Е300</td>
+            </tr>
+            <tr>
+               <td>E334</td>
+               <td>Tartaric acid</td>
+               <td>Винена киселина; без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E335</td>
+               <td>Sodium tartrates</td>
+               <td>виж Е334</td>
+            </tr>
+            <tr>
+               <td>E336</td>
+               <td>Potassium tartrates</td>
+               <td>виж Е334</td>
+            </tr>
+            <tr>
+               <td>E337</td>
+               <td>Sodium potassium tartrate</td>
+               <td>виж Е334</td>
+            </tr>
+            <tr>
+               <td>E338</td>
+               <td>Phosphoric acid</td>
+               <td>фосфорна киселина; без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E339</td>
+               <td>Sodium phosphates</td>
+               <td>минерална сол, използвана като лаксатив и фиксиращ агент в текстилното боядисване; високите дози могат да нарушат равновесието на калций/фосфор</td>
+            </tr>
+            <tr>
+               <td>E340</td>
+               <td>Potassium phosphates</td>
+               <td>виж 339</td>
+            </tr>
+            <tr>
+               <td>E341</td>
+               <td>Calcium phosphates</td>
+               <td>минерална сол, използва се в медицината, като антиацид и полиращо в пастите за зъби</td>
+            </tr>
+            <tr>
+               <td>E343</td>
+               <td>Magnesium phosphates</td>
+               <td>основен минерал, антивтвърдяващ в заместителите на сол</td>
+            </tr>
+            <tr>
+               <td>E350</td>
+               <td>Sodium malates</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E351</td>
+               <td>Potassium malate</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E352</td>
+               <td>Calcium malates</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E353</td>
+               <td>Metatartaric acid</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E354</td>
+               <td>Calcium tartrate</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E355</td>
+               <td>Adipic acid</td>
+               <td>киселина за хранителни цели, използва се при желатините, безалкохолни напитки, подправки и овкусители</td>
+            </tr>
+            <tr>
+               <td>E357</td>
+               <td>Potassium adipate</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E363</td>
+               <td>Succinic acid</td>
+               <td>забранена в някои държави</td>
+            </tr>
+            <tr>
+               <td>E365</td>
+               <td>Sodium fumarate</td>
+               <td>сол на фумаровата киселина (растението клас Fumaria esp. F.officianalis)</td>
+            </tr>
+            <tr>
+               <td>E366</td>
+               <td>Potassium fumarate</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E367</td>
+               <td>Calcium fumarate</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E370</td>
+               <td>1,4-Heptonolactone</td>
+               <td>забранена в някои държави</td>
+            </tr>
+            <tr>
+               <td>E375</td>
+               <td>Niacin</td>
+               <td>vitamin B3</td>
+            </tr>
+            <tr>
+               <td>E380</td>
+               <td>Tri-ammonium citrate</td>
+               <td>може да влияе на черния дроб и на функциите на панкреаса</td>
+            </tr>
+            <tr>
+               <td>E381</td>
+               <td>Ammonium ferric citrates</td>
+               <td>сол на лимонената киселина, използва се като добавка на желязо в диетични формули</td>
+            </tr>
+            <tr>
+               <td>E385</td>
+               <td>Calcium disodium EDTA</td>
+               <td>забранен в някои страни</td>
+            </tr>
+         </tbody>
+      </table>
+      <!-- ===================== ГУМИ, ЕМУЛГАТОРИ, СТАБИЛИЗАТОРИ (Е400-Е495) ===================== -->
+      <h2><i class="fas fa-gem"></i> Гуми, емулгатори, стабилизатори (Е400-Е495)</h2>
+      <table class="searchable-table">
+         <thead>
+            <tr>
+               <th><i class="fas fa-hashtag"></i> Номер</th>
+               <th><i class="fas fa-font"></i> Наименование</th>
+               <th><i class="fas fa-comment"></i> Коментар</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>E400</td>
+               <td>Alginic acid</td>
+               <td>извлича се от водорасли, използва се в яйчени кремове, ободрителни напитки и смеси, сгъстяващи кремове – предпазва от кристализиране; няма данни за странични ефекти при приемане в малки количества</td>
+            </tr>
+            <tr>
+               <td>E401</td>
+               <td>Sodium alginate</td>
+               <td>виж 400</td>
+            </tr>
+            <tr>
+               <td>E402</td>
+               <td>Potassium alginate</td>
+               <td>виж 400</td>
+            </tr>
+            <tr>
+               <td>E403</td>
+               <td>Ammonium alginate</td>
+               <td>виж 400</td>
+            </tr>
+            <tr>
+               <td>E404</td>
+               <td>Calcium alginate</td>
+               <td>виж 400</td>
+            </tr>
+            <tr>
+               <td>E405</td>
+               <td>Propylene glycol alginate</td>
+               <td>няма данни за странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E406</td>
+               <td>Agar</td>
+               <td>получава се от червени водорасли, понякога се използва като лаксативно средство, използва се в месната преработката, захаропреработка и в сладоледите</td>
+            </tr>
+            <tr>
+               <td>E407</td>
+               <td>Carrageenan</td>
+               <td>извлича се от водорасли, може да бъде замърсен с етилен оксид, който образува етилен хлорхидрини, които се смятат за канцерогени; иначе чистият карагенан се разгражда в червата</td>
+            </tr>
+            <tr>
+               <td>E410</td>
+               <td>Locust bean gum</td>
+               <td>извлича се от Ceratonia siliqua – растение от семейство рожкови; използува се в захаросани плодове, освежителни напитки, дресинги, безкофеинови шоколадови заместители, плодови сокове, намалява нивото на холестерина</td>
+            </tr>
+            <tr>
+               <td>E412</td>
+               <td>Guar gum</td>
+               <td>извлича се от семена от Cyamoposis tetragonolobus в Индия; намалява нивата на холестерола</td>
+            </tr>
+            <tr>
+               <td>E413</td>
+               <td>Tragacanth</td>
+               <td>гума, извлечена от дървото Astragalus gummifer; използува се в храните, свързващо в козметиката</td>
+            </tr>
+            <tr>
+               <td>E414</td>
+               <td>Acacia</td>
+               <td>извлича се от Acacia Sengal</td>
+            </tr>
+            <tr>
+               <td>E415</td>
+               <td>Xanthan gum</td>
+               <td>използва се като структурообразуващо, сгъстяващо, стабилизатор, емулгатор и пенообразуващ агент</td>
+            </tr>
+            <tr>
+               <td>E416</td>
+               <td>Karaya gum</td>
+               <td>извлича се от индийското дърво Sterculia urens; използва се при сладоледите, яйчени кремове, сладки, като пълнител – има свойството да увеличи обема си 100 пъти, при добавяне на вода</td>
+            </tr>
+            <tr>
+               <td>E417</td>
+               <td>Tara gum</td>
+               <td>извлича се от храста Caesalpinia Spinosa, намиращ се в Еквадор и Перу; използува се в комбинация с Е415, Е410, Е412 за увеличаване на визкозитета</td>
+            </tr>
+            <tr>
+               <td>E420</td>
+               <td>Sorbitol</td>
+               <td>изкуствен подсладител, получава се от глюкоза; използува се в нискокалорични храни, консервант в козметиката; не е разрешен в детски храни, може да причини коремни смущения, има лаксативен ефект</td>
+            </tr>
+            <tr>
+               <td>E421</td>
+               <td>Mannitol</td>
+               <td>изкуствен подсладител; използва се в нискокалоричните храни</td>
+            </tr>
+            <tr>
+               <td>E422</td>
+               <td>Glycerol</td>
+               <td>подсладител; използва се в ликьори; бонбони; сушени плодове, нискокалорични храни</td>
+            </tr>
+            <tr>
+               <td>E431</td>
+               <td>Polyoxyethylene stearate</td>
+               <td>Полиоксиетилен(8)стеарат</td>
+            </tr>
+            <tr>
+               <td>E432</td>
+               <td>Polysorbate 20</td>
+               <td>Полиоксиетиленсорбитан монолаурат</td>
+            </tr>
+            <tr>
+               <td>E433</td>
+               <td>Polysorbate 80</td>
+               <td>Полиоксиетиленсорбитан моноолеат; емулгатор, извлечен от мастни киселини, анти пенообразуващ</td>
+            </tr>
+            <tr>
+               <td>E434</td>
+               <td>Polysorbate 40</td>
+               <td>Полиоксиетиленсорбитан монопалмитат</td>
+            </tr>
+            <tr>
+               <td>E435</td>
+               <td>Polysorbate 60</td>
+               <td>Полиоксиетиленсорбитан моностеарат</td>
+            </tr>
+            <tr>
+               <td>E436</td>
+               <td>Polysorbate 65</td>
+               <td>Полиоксиетиленсорбитан тристеарат</td>
+            </tr>
+            <tr>
+               <td>E440(a)</td>
+               <td>Pectin</td>
+               <td>Пектини: пектин използват се за сгъстяване на мармалад, желета и сосове</td>
+            </tr>
+            <tr>
+               <td>E440(b)</td>
+               <td>Amidated pectin</td>
+               <td>амидопектин</td>
+            </tr>
+            <tr>
+               <td>E441</td>
+               <td>Gelatine</td>
+               <td>желатин – възможен алерген, за астматици и хора, алергични към сулфити</td>
+            </tr>
+            <tr>
+               <td>E442</td>
+               <td>Ammonium phosphatides</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E450</td>
+               <td>Diphosphates</td>
+               <td>дифосфати: натриеви, калиеви и калциеви</td>
+            </tr>
+            <tr>
+               <td>E451</td>
+               <td>Triphosphates</td>
+               <td>трифосфати : натриев и калиев</td>
+            </tr>
+            <tr>
+               <td>E452</td>
+               <td>Polyphosphates</td>
+               <td>полифосфати: натриев калиев и калциев</td>
+            </tr>
+            <tr>
+               <td>E460</td>
+               <td>Cellulose</td>
+               <td>целулоза – без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E461</td>
+               <td>Methyl cellulose</td>
+               <td>метил целулоза; може да причини чревни проблеми</td>
+            </tr>
+            <tr>
+               <td>E463</td>
+               <td>Hydroxypropyl cellulose</td>
+               <td>ходрокси пропил целулоза; забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E464</td>
+               <td>Hydroxypropyl methyl cellulose</td>
+               <td>хидрокси пропил метил целулоза</td>
+            </tr>
+            <tr>
+               <td>E465</td>
+               <td>Ethyl methyl cellulose</td>
+               <td>етил метил целулоза</td>
+            </tr>
+            <tr>
+               <td>E466</td>
+               <td>Carboxy methyl cellulose, Sodium carboxy methyl cellulose</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E469</td>
+               <td>Sodium caseinate</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E470</td>
+               <td>Fatty acids salts</td>
+               <td>соли на мастни киселини; забранени в някои страни</td>
+            </tr>
+            <tr>
+               <td>E471</td>
+               <td>Mono & di glycerides of fatty acids</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E472</td>
+               <td>Fatty acid esters of glycerides</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E473</td>
+               <td>Sucrose esters of fatty acids</td>
+               <td>естери на захароза и мастни киселини</td>
+            </tr>
+            <tr>
+               <td>E474</td>
+               <td>Sucroglycerides</td>
+               <td>захароглицериди</td>
+            </tr>
+            <tr>
+               <td>E475</td>
+               <td>Polyglycerol esters of fatty acids</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E476</td>
+               <td>Polyglycerol polyricinoleate</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E477</td>
+               <td>Propylene glycol esters of fatty acids</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E478</td>
+               <td>Lactylated Fatty Acid Esters of Glycerol and Propilene Glycol</td>
+               <td>няма данни</td>
+            </tr>
+            <tr>
+               <td>E479(b)</td>
+               <td>Thermally oxidized soya bean oil interacted with mono- and diglycerides of fatty acids</td>
+               <td>Термически окислени сосове и бобово масло с моно- и диглицериди на мастните к-ни</td>
+            </tr>
+            <tr>
+               <td>E480</td>
+               <td>Dioctyl sodium sulphosuccinate</td>
+               <td>натриев диоктилсулфосукцинат</td>
+            </tr>
+            <tr>
+               <td>E481</td>
+               <td>Sodium stearoyl-2-lactylate</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E482</td>
+               <td>Calcium stearoyl-2-lactylate</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E483</td>
+               <td>Stearyl tartrate</td>
+               <td>забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E491</td>
+               <td>Sorbitan monos tearate</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E492</td>
+               <td>Sorbitan tristearate</td>
+               <td>може да увеличи абсорбцията на някои мастноразтворими субстанции</td>
+            </tr>
+            <tr>
+               <td>E493</td>
+               <td>Sorbitan monolaurate</td>
+               <td>забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E494</td>
+               <td>Sorbitan mono-oleate</td>
+               <td>забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E495</td>
+               <td>Sorbitan monopalmitate</td>
+               <td>забранен в някои страни</td>
+            </tr>
+         </tbody>
+      </table>
+      <!-- ===================== МИНЕРАЛНИ СОЛИ (Е500-Е585) ===================== -->
+      <h2><i class="fas fa-cube"></i> Минерални соли (Е500-Е585)</h2>
+      <table class="searchable-table">
+         <thead>
+            <tr>
+               <th><i class="fas fa-hashtag"></i> Номер</th>
+               <th><i class="fas fa-font"></i> Наименование</th>
+               <th><i class="fas fa-comment"></i> Коментар</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>E500</td>
+               <td>Sodium carbonates</td>
+               <td>Натриев карбонати, без странични ефекти в малки количества</td>
+            </tr>
+            <tr>
+               <td>E501</td>
+               <td>Potassium carbonates</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E503</td>
+               <td>Ammonium carbonates</td>
+               <td>амониев карбонат – понякога дразни лигавицата</td>
+            </tr>
+            <tr>
+               <td>E504</td>
+               <td>Magnesium carbonate</td>
+               <td>използва се като лаксатив и антиацид</td>
+            </tr>
+            <tr>
+               <td>E507</td>
+               <td>Hydrochloric acid</td>
+               <td>безопасно в малки количества</td>
+            </tr>
+            <tr>
+               <td>E508</td>
+               <td>Potassium chloride</td>
+               <td>по-големи количества могат да причинят язва</td>
+            </tr>
+            <tr>
+               <td>E509</td>
+               <td>Calcium chloride</td>
+               <td>калциев хлорид</td>
+            </tr>
+            <tr>
+               <td>E510</td>
+               <td>Ammonium chloride</td>
+               <td>да се избягва от хора с понижени чернодробни и бъбречни функции</td>
+            </tr>
+            <tr>
+               <td>E511</td>
+               <td>Magnesium chloride</td>
+               <td>магнезиев хлорид (основен минерал)</td>
+            </tr>
+            <tr>
+               <td>E513</td>
+               <td>Sulphuric acid</td>
+               <td>сярна киселина; забранена в някои държави</td>
+            </tr>
+            <tr>
+               <td>E514</td>
+               <td>Sodium sulphates</td>
+               <td>натриев сулфат – може да наруши водния баланс</td>
+            </tr>
+            <tr>
+               <td>E515</td>
+               <td>Potassium sulphates</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E516</td>
+               <td>Calcium sulphate</td>
+               <td>калциев сулфат, получава се от варовик</td>
+            </tr>
+            <tr>
+               <td>E518</td>
+               <td>Magnesium sulphate</td>
+               <td>има лаксативен ефект</td>
+            </tr>
+            <tr>
+               <td>E519</td>
+               <td>Copper sulphate</td>
+               <td>меден сулфат – използва се рядко</td>
+            </tr>
+            <tr>
+               <td>E524</td>
+               <td>Sodium hydroxide</td>
+               <td>натриева основа</td>
+            </tr>
+            <tr>
+               <td>E525</td>
+               <td>Potassium hydroxide</td>
+               <td>калиева основа</td>
+            </tr>
+            <tr>
+               <td>E526</td>
+               <td>Calcium hydroxide</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E527</td>
+               <td>Ammonium hydroxide</td>
+               <td>амониев хидроксид</td>
+            </tr>
+            <tr>
+               <td>E528</td>
+               <td>Magnesium hydroxide</td>
+               <td>магнезиев хидроксид</td>
+            </tr>
+            <tr>
+               <td>E529</td>
+               <td>Calcium oxide</td>
+               <td>калциев оксид, безопасен в малки количества</td>
+            </tr>
+            <tr>
+               <td>E530</td>
+               <td>Magnesium oxide</td>
+               <td>магнезиев оксид</td>
+            </tr>
+            <tr>
+               <td>E535</td>
+               <td>Sodium ferrocyanide</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E536</td>
+               <td>Potassium ferrocyanide</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E540</td>
+               <td>Dicalcium diphosphate</td>
+               <td>дикалциев дифосфат</td>
+            </tr>
+            <tr>
+               <td>E541</td>
+               <td>Sodium aluminium phosphate</td>
+               <td>натриево-алуминиев фосфат</td>
+            </tr>
+            <tr>
+               <td>E542</td>
+               <td>Bone phosphate</td>
+               <td>костен фосфат derived from bones; used in dried milk for coffee machines</td>
+            </tr>
+            <tr>
+               <td>E544</td>
+               <td>Calcium polyphosphates</td>
+               <td>забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E545</td>
+               <td>Ammonium polyphosphates</td>
+               <td>забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E551</td>
+               <td>Silicon dioxide</td>
+               <td>силициев двуокис – без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E552</td>
+               <td>Calcium silicate</td>
+               <td>получава се от варовик и диатомит – антиацид</td>
+            </tr>
+            <tr>
+               <td>E553(a)</td>
+               <td>Magnesium silicates</td>
+               <td>магнезиев силикат</td>
+            </tr>
+            <tr>
+               <td>E553(b)</td>
+               <td>Talc</td>
+               <td>свързва се с рак на стомаха; типичен в продукти – белен ориз, при шоколадите и в сладкарството</td>
+            </tr>
+            <tr>
+               <td>E554</td>
+               <td>Sodium aluminium silicate</td>
+               <td>използва се в солта, заместители на сухо мляко и брашна; опасен при бременност</td>
+            </tr>
+            <tr>
+               <td>E556</td>
+               <td>Calcium aluminium silicate</td>
+               <td>използва се в млечни прахове; виж Е554</td>
+            </tr>
+            <tr>
+               <td>E558</td>
+               <td>Bentonite</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E559</td>
+               <td>Aluminium silicate (Kaolin)</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E570</td>
+               <td>Stearic acid</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E572</td>
+               <td>Magnesium stearate</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E575</td>
+               <td>Glucono delta-lactone</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E576</td>
+               <td>Sodium gluconate</td>
+               <td>забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E577</td>
+               <td>Potassium gluconate</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E578</td>
+               <td>Calcium gluconate</td>
+               <td>без странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E579</td>
+               <td>Ferrous gluconate</td>
+               <td>цветозадържащ агент; използва се в растителните масла, като добавка на желязо; в малки количества е безвреден</td>
+            </tr>
+            <tr>
+               <td>E585</td>
+               <td>Ferrous lactate</td>
+               <td>Използва се като източник на желязо за хранително обогатяване и като стабилизатор на цвета (особено за черни маслини)</td>
+            </tr>
+         </tbody>
+      </table>
+      <!-- ===================== УСИЛВАЩИ ВКУСА И АРОМАТА (Е620-Е640) ===================== -->
+      <h2><i class="fas fa-utensils"></i> Усилващи вкуса и аромата (Е620-Е640)</h2>
+      <table class="searchable-table">
+         <thead>
+            <tr>
+               <th><i class="fas fa-hashtag"></i> Номер</th>
+               <th><i class="fas fa-font"></i> Наименование</th>
+               <th><i class="fas fa-comment"></i> Коментар</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>E620</td>
+               <td>Glutamic acid</td>
+               <td>аминокиселина, използва се в подправки, заместители на сол,усилва аромата, използва се в организма при изграждането на протеините, произвежда се от простатата; не подходяща за деца</td>
+            </tr>
+            <tr>
+               <td>E621</td>
+               <td>Monosodium glutamate (MSG)</td>
+               <td>мононатриев глутамат, използва се в консервирани зеленчуци, дресинги, много замразени храни</td>
+            </tr>
+            <tr>
+               <td>E622</td>
+               <td>Monopotassium glutamate</td>
+               <td>монокалиев глутамат; използва се като заместител за сол с ниско натриево съдържание, може да причини стомашни разстройства</td>
+            </tr>
+            <tr>
+               <td>E623</td>
+               <td>Calcium diglutamate</td>
+               <td>в заместители за сол, не са наблюдавани странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E624</td>
+               <td>Monoammonium glutamate</td>
+               <td>в заместители за сол, не са наблюдавани странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E625</td>
+               <td>Magnesium diglutamate</td>
+               <td>в заместители за сол, не са наблюдавани странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E626</td>
+               <td>Guanylic acid</td>
+               <td>в подправки, заместители на сол, овкусители, гуанилова киселина; свързва се с подагра</td>
+            </tr>
+            <tr>
+               <td>E627</td>
+               <td>Disodium guanylate</td>
+               <td>натриев гуанилат; виж 626</td>
+            </tr>
+            <tr>
+               <td>E629</td>
+               <td>Calcium guanylate</td>
+               <td>калциев гуанилат; виж 626</td>
+            </tr>
+            <tr>
+               <td>E631</td>
+               <td>Disodium inosinate</td>
+               <td>виж 626</td>
+            </tr>
+            <tr>
+               <td>E633</td>
+               <td>Calcium inosinate</td>
+               <td>виж 631</td>
+            </tr>
+            <tr>
+               <td>E635</td>
+               <td>Disodium 5′-ribonucleotide</td>
+               <td>както 626</td>
+            </tr>
+            <tr>
+               <td>E636</td>
+               <td>Maltol</td>
+               <td>използва се като овкусител на млечно базирани напитки (шоколадово мляко), сладкиши, дъвки, плодови вина; има максимално допустима доза за кг</td>
+            </tr>
+            <tr>
+               <td>E637</td>
+               <td>Ethyl maltol</td>
+               <td>виж Е636</td>
+            </tr>
+            <tr>
+               <td>E640</td>
+               <td>Glycine & its sodium salt</td>
+               <td>глицин и негова натриева сол</td>
+            </tr>
+         </tbody>
+      </table>
+      <!-- ===================== РАЗНИ (E900-E1520) ===================== -->
+      <h2><i class="fas fa-ellipsis-h"></i> РАЗНИ</h2>
+      <table class="searchable-table">
+         <thead>
+            <tr>
+               <th><i class="fas fa-hashtag"></i> Номер</th>
+               <th><i class="fas fa-font"></i> Наименование</th>
+               <th><i class="fas fa-comment"></i> Коментар</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>E900</td>
+               <td>Dimethyl polysiloxane</td>
+               <td>базирано на силикон</td>
+            </tr>
+            <tr>
+               <td>E901</td>
+               <td>Beeswaxes</td>
+               <td>пчелни восъци, понякога предизвикват алергични реакции</td>
+            </tr>
+            <tr>
+               <td>E903</td>
+               <td>Carnauba wax</td>
+               <td>извлечено от Южно Африканска палма, понякога предизвикват алергични реакции</td>
+            </tr>
+            <tr>
+               <td>E904</td>
+               <td>Shellac</td>
+               <td>извлича се от инсекти, понякога предизвикват алергични реакции на кожата</td>
+            </tr>
+            <tr>
+               <td>E905</td>
+               <td>Paraffins, Microcrystalline wax</td>
+               <td>парафини – може да инхибират абсорбцията на мазнини, леко лаксативни, може би са свързани с рака на червата, изпозлват се в сладкишите, при процесите на ферментация, при сушени плодове</td>
+            </tr>
+            <tr>
+               <td>E907</td>
+               <td>Refined microcrystalline wax</td>
+               <td>забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E913</td>
+               <td>Lanolin</td>
+               <td>добива се от овча вълна</td>
+            </tr>
+            <tr>
+               <td>E920</td>
+               <td>L-Cystein</td>
+               <td>за третиране на брашното, извлича се от животински косми или от пера</td>
+            </tr>
+            <tr>
+               <td>E921</td>
+               <td>L-Cystin</td>
+               <td>вж E920</td>
+            </tr>
+            <tr>
+               <td>E924</td>
+               <td>Potassium bromate</td>
+               <td>в обработка на брашната, в по-големи количества може да предизвика стомашни проблеми</td>
+            </tr>
+            <tr>
+               <td>E925</td>
+               <td>Chlorine</td>
+               <td>в обработка на брашната</td>
+            </tr>
+            <tr>
+               <td>E926</td>
+               <td>Chlorine dioxide</td>
+               <td>виж 925</td>
+            </tr>
+            <tr>
+               <td>E927</td>
+               <td>Azodicarbonamide</td>
+               <td>забранен в някои страни</td>
+            </tr>
+            <tr>
+               <td>E928</td>
+               <td>Benzoyl peroxide</td>
+               <td>при избелване на брашното, вреден за хора с алергични прояви – виж 210</td>
+            </tr>
+            <tr>
+               <td>E931</td>
+               <td>Nitrogen</td>
+               <td>азот, при пакетиране и замразяване</td>
+            </tr>
+            <tr>
+               <td>E932</td>
+               <td>Nitrous oxide</td>
+               <td>безвреден в малки количества</td>
+            </tr>
+            <tr>
+               <td>E950</td>
+               <td>Acesulphane potassium</td>
+               <td></td>
+            </tr>
+            <tr>
+               <td>E951</td>
+               <td>Aspartame</td>
+               <td>изкуствен подсладител, има доста странични реакции, както и има хора, алергични към него</td>
+            </tr>
+            <tr>
+               <td>E952</td>
+               <td>Cyclamic acid</td>
+               <td>изкуствен подсладител, забранен в САЩ и UK, заради връзки с рака</td>
+            </tr>
+            <tr>
+               <td>E954</td>
+               <td>Saccharines</td>
+               <td>изкуствен подсладител, забранен в САЩ от 1977, заради връзки с рака</td>
+            </tr>
+            <tr>
+               <td>E957</td>
+               <td>Thaumatin</td>
+               <td>изкуствен подсладител, получен от тропическото растение Thaumococcus danielli; за подсладяване на вина, хляб и плодове</td>
+            </tr>
+            <tr>
+               <td>E965</td>
+               <td>Maltitol, Hydrogenated glucose syrup</td>
+               <td>овлажнител, лаксативен в големи концентрации</td>
+            </tr>
+            <tr>
+               <td>E967</td>
+               <td>Xylitol</td>
+               <td>овлажнител</td>
+            </tr>
+            <tr>
+               <td>E999</td>
+               <td>Quillaia extract</td>
+               <td>емулгатор, използва се в бирата и газираните напитки</td>
+            </tr>
+            <tr>
+               <td>E1100</td>
+               <td>Amylase</td>
+               <td>извлича се от гъби или панкреас на свиня</td>
+            </tr>
+            <tr>
+               <td>E1200</td>
+               <td>Polydextrose</td>
+               <td>безопасен в малки дози</td>
+            </tr>
+            <tr>
+               <td>E1201</td>
+               <td>Polyvinylpyrrolidone</td>
+               <td>диспергиращ агент; при изкуствените подсладители</td>
+            </tr>
+            <tr>
+               <td>E1202</td>
+               <td>Polyvinylpolypyrrolidone</td>
+               <td>колоиден стабилизатор, при избистряне на виното</td>
+            </tr>
+            <tr>
+               <td>E1400-E1450</td>
+               <td>Starches</td>
+               <td>Скорбяла – няма странични ефекти</td>
+            </tr>
+            <tr>
+               <td>E1505</td>
+               <td>Triethyl acetate</td>
+               <td>част от него се превръща в алкохол в тялото</td>
+            </tr>
+            <tr>
+               <td>E1510</td>
+               <td>Ethanol</td>
+               <td>алкохол</td>
+            </tr>
+            <tr>
+               <td>E1517, E1518</td>
+               <td>Glycerol acetates</td>
+               <td>разтворител, получен от глицерол</td>
+            </tr>
+            <tr>
+               <td>E1520</td>
+               <td>Propylene glycol</td>
+               <td>омокрящ и диспергиращ агент</td>
+            </tr>
+         </tbody>
+      </table>
+      <div class="note">
+         <p><i class="fas fa-info-circle"></i> * HACSG: Хиперактивност при деца.<br><i class="fas fa-info-circle"></i> ** US FDA: Администрация по храните и лекарствата на САЩ.</p>
+         <p>Таблицата обхваща оцветители (E100-E181), консерванти (E200-E290), киселини/антиоксиданти (E296-E385), гуми/емулгатори (E400-E495), минерални соли (E500-E585), усилители на вкус (E620-E640) и др.</p>
+      </div>
+      <!-- СТРЕЛКА ЗА ВРЪЩАНЕ В НАЧАЛОТО -->
+      <button class="scroll-top-btn" aria-label="Връщане в началото"><i class="fas fa-arrow-up"></i></button>
+      <script>
+         // 1. Превръщаме първата колона на всяка таблица в линк към Google (без промяна на визуалния стил)
+         document.querySelectorAll('.searchable-table tbody tr').forEach(row => {
+             let firstCell = row.querySelector('td:first-child');
+             if (firstCell) {
+                 let eNumber = firstCell.innerText.trim(); 
+                 let googleUrl = `https://www.google.com/search?q=${encodeURIComponent(eNumber + ' хранителна добавка')}`;
+                 let link = document.createElement('a');
+                 link.href = googleUrl;
+                 link.target = "_blank";
+                 link.textContent = eNumber;
+                 firstCell.innerHTML = '';
+                 firstCell.appendChild(link);
+             }
+         });
+         
+         // 2. Подобрено търсене в текущата страница – поддържа няколко термина (разделители: ; , или интервал)
+         document.getElementById('searchInput').addEventListener('keyup', function() {
+             let rawText = this.value.trim();
+             let searchTerms = [];
+             if (rawText !== "") {
+                 // Разделяме по ; или , или интервал
+                 searchTerms = rawText.split(/[;, ]+/).filter(term => term.length > 0);
+             }
+             
+             let tables = document.querySelectorAll('.searchable-table');
+             
+             tables.forEach(function(table) {
+                 let rows = table.querySelectorAll('tbody tr');
+                 let hasVisibleRows = false;
+                 
+                 rows.forEach(function(row) {
+                     let rowText = row.textContent.toLowerCase();
+                     let shouldShow = false;
+                     
+                     if (searchTerms.length === 0) {
+                         shouldShow = true;
+                     } else {
+                         for (let term of searchTerms) {
+                             if (rowText.includes(term.toLowerCase())) {
+                                 shouldShow = true;
+                                 break;
+                             }
+                         }
+                     }
+                     
+                     if (shouldShow) {
+                         row.style.display = '';
+                         hasVisibleRows = true;
+                     } else {
+                         row.style.display = 'none';
+                     }
+                 });
+                 
+                 let tableContainer = table.closest('table');
+                 let prevHeading = tableContainer.previousElementSibling;
+                 if (!hasVisibleRows && rawText !== "") {
+                     table.style.display = 'none';
+                     if (prevHeading && prevHeading.tagName === 'H2') {
+                         prevHeading.style.display = 'none';
+                     }
+                 } else {
+                     table.style.display = '';
+                     if (prevHeading && prevHeading.tagName === 'H2') {
+                         prevHeading.style.display = '';
+                     }
+                 }
+             });
+         });
+         
+         // 3. СТРЕЛКА ЗА ВРЪЩАНЕ В НАЧАЛОТО (появява се след превъртане надолу)
+         const scrollBtn = document.querySelector('.scroll-top-btn');
+         
+         function toggleScrollButton() {
+             if (window.scrollY > 300) {
+                 scrollBtn.classList.add('show');
+             } else {
+                 scrollBtn.classList.remove('show');
+             }
+         }
+         
+         // Плавно връщане към началото при клик
+         scrollBtn.addEventListener('click', function() {
+             window.scrollTo({
+                 top: 0,
+                 behavior: 'smooth'
+             });
+         });
+         
+         // Следим превъртането
+         window.addEventListener('scroll', toggleScrollButton);
+         // Извикваме веднъж при зареждане, за да проверим началната позиция
+         toggleScrollButton();
+      </script>
+   </body>
+</html>
